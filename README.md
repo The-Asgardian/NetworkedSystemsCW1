@@ -28,7 +28,7 @@
 ---
 
 ### l2_learning.py
-- The l2_learning.py script implements a basic Layer 2 learning mechanism for OpenFlow switches, allowing them to learn the MAC addresses of connected hosts and forward packets accordingly. When h1 pings h4, the switch learns h1's MAC address and the port it is connected to, flooding the ping request if h4's MAC address is not yet in the table. If the switch has learned h4's MAC address, it will forward the ICMP request directly to h4's port. Consequently, h2 should not receive the ICMP packet if the switch has correctly learned the MAC addresses; however, if h4 is unknown to the switch, it may receive the packet temporarily during the flooding process until the switch learns the correct paths.
+- The l2_learning.py script is a basic Layer 2 learning switch. It learns the MAC addresses of connected hosts and uses this information to forward packets to the correct ports. When h1 pings h4, the switch initially floods the packet if it hasn’t yet learned where h4 is located. Once the switch learns h4's MAC address and port, it sends packets directly, avoiding unnecessary flooding. This means h2 should not receive the ICMP packet once the switch has learned h4’s location, but it may see the packet briefly during the learning process.
 ---
 ### When you run h1 ping h4 is there any chance you receive an ICMP packet in h2?
 - There is not a chance for h2 to receive an ICMP packet when there is a firewall present with proper rules. However before the firewall is up there is a chance that h2 receives an ICMP packet if there is any packet flooding and some packets reach the unintended hosts.
